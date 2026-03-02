@@ -1,0 +1,102 @@
+.page-wrapper {
+  @include backgroundImage("bg.jpg", cover);
+
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba($color-black, 0.6);
+  }
+
+  & > * {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+.course {
+  @media (max-width: $xs-max) {
+    padding: 50px 0;
+  }
+
+  h1 {
+    @include fonts(52px, 60px, 600);
+    text-align: center;
+    text-wrap: balance;
+    margin-bottom: 50px;
+
+    @media (max-width: $xs-max) {
+      @include fonts(30px, 36px, 600);
+      margin-bottom: 30px;
+    }
+  }
+
+  h4 {
+    @include fonts(20px, 24px, 500);
+    text-align: center;
+    margin-bottom: 50px;
+
+    @media (max-width: $xs-max) {
+      margin-bottom: 30px;
+    }
+  }
+
+  ol {
+    margin-bottom: 60px;
+    max-width: 460px;
+
+    @media (max-width: $xs-max) {
+      max-width: 320px;
+      margin-bottom: 30px;
+    }
+  }
+
+  li {
+    list-style: none;
+    margin: 0 auto 15px;
+    text-align: center;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: -10px;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 6px;
+      background-color: $color-white;
+      border-radius: 50%;
+    }
+  }
+
+  p {
+    @include fonts(16px, 22px, 400);
+    text-align: center;
+    margin: 0 auto 30px;
+    max-width: 460px;
+  }
+
+  &__button {
+    padding: 15px 45px;
+    background-color: $background-button;
+    color: $color-white;
+    font-size: 18px;
+    font-weight: 500;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    border: 2px solid $color-border-button;
+    height: 68px;
+
+    @media (max-width: $xs-max) {
+      padding: 0;
+    }
+  }
+}

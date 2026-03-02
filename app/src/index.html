@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <title>Quiz</title>
+  <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="../images/favicon.ico" sizes="32x32">
+  <link rel="stylesheet" href="./styles/main.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    <section class="course">
+      <div class="container">
+        <h1>
+          Title
+        </h1>
+        <h4>
+          Subtitle
+        </h4>
+        <ol>
+          <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, ducimus.</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, ducimus.</li>
+          <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, ducimus.</li>
+        </ol>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate sapiente provident eum illo, aut aliquid exercitationem magni facere, assumenda ducimus a. Accusamus rem repellat corporis explicabo consequatur perferendis vel dolores.
+        </p>
+        <button class="course__button">Start</button>
+      </div>
+    </section>
+
+    <section class="quiz">
+      <button class="quiz__close">✕</button>
+      <div class="quiz__inner">
+        <div class="quiz__progress">
+        <div class="quiz__progress-bar">
+          <div class="quiz__progress-fill" id="progressFill"></div>
+          <div class="quiz__progress-badge" id="progressText">1 / 7</div>
+        </div>
+      </div>
+        <h2 class="quiz__title"></h2>
+        <div id="answers" class="answers"></div>
+        <div class="quiz__nav">
+          <button class="nav-back" aria-label="Back">←</button>
+          <div class="nav-next-wrap">
+            <button class="nav-next">Next</button>
+            <span class="nav-hint">or press Enter</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+<script src="./js/main.js"></script>
+</body>
+</html>

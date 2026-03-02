@@ -1,0 +1,75 @@
+@mixin fonts($size, $lh, $fw: 400) {
+  font-size: $size;
+  line-height: $lh;
+  font-weight: $fw;
+}
+
+@mixin fontsTypography($fontName, $fontWeight, $fontStyle: normal) {
+  $fontWeightArr: (
+      Thin: 100,
+      ThinItalic: 100,
+      ExtraLight: 200,
+      ExtraLightItalic: 200,
+      Light: 300,
+      LightItalic: 300,
+      Regular: 400,
+      Italic: 400,
+      Medium: 500,
+      MediumItalic: 500,
+      SemiBold: 600,
+      SemiBoldItalic: 600,
+      Bold: 700,
+      BoldItalic: 700,
+      ExtraBold: 800,
+      ExtraBoldItalic: 800,
+      Black: 900,
+      BlackItalic: 900
+  );
+
+  @font-face {
+    font-display: swap;
+    font-family: $fontName;
+    src: url("../fonts/#{$fontName}/#{$fontWeight}/#{$fontName}-#{$fontWeight}.woff2") format('woff2'),
+         url("../fonts/#{$fontName}/#{$fontWeight}/#{$fontName}-#{$fontWeight}.woff") format('woff');
+    font-weight: map-get($fontWeightArr, $fontWeight);
+    font-style: $fontStyle;
+  }
+}
+
+@mixin backgroundImage($image, $size: auto, $posX: center, $posY: center) {
+  background-image: url('../images/#{$image}');
+  background-repeat: no-repeat;
+  background-position: $posX $posY;
+  background-size: $size;
+}
+
+@mixin hoveredOpacity($opacityStart, $opacityFinish) {
+  opacity: $opacityStart;
+  transition: opacity .3s ease;
+
+  &:hover {
+    @media (min-width: $lg-min) {
+      opacity: $opacityFinish;
+    }
+  }
+}
+
+@mixin hoveredBackground($bg) {
+  transition: background-color .3s ease;
+
+  &:hover {
+    @media (min-width: $lg-min) {
+      background-color: $bg;
+    }
+  }
+}
+
+@mixin inputAutofill($bg, $color) {
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 45px $bg inset !important;
+    -webkit-text-fill-color: $color !important;
+  }
+}
