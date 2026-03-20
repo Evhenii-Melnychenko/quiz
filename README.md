@@ -33,6 +33,70 @@ npm run build
 * [Gulp](https://gulpjs.com/) - Automate and enhance your workflow
 
 
+##
+
+# Quiz Page
+
+This page features an interactive **quiz** where users can answer a series of questions. The quiz is fully **configurable**, allowing you to **edit questions and answer options** directly in the code or via the provided data structure.  
+
+---
+
+## ✨ Features
+
+### 1️Customizable Questions & Answers
+- Add, remove, or modify questions.
+- Each question can have a type, such as **multiple choice** or **text input**.
+- Answers can be customized for each question.
+
+Example structure:
+
+```js
+const questions = [
+  {
+    title: "Title 1",
+    answers: [
+      "Answer 1",
+      "Answer 2",
+      "Answer 3",
+      "Answer 4",
+    ]
+  },
+  {
+    title: "Title 2",
+    answers: [
+      "Answer 1", 
+      "Answer 2", 
+      "Answer 3", 
+      "Answer 4",
+      "Answer 5"]
+  },
+   {
+    type: "form",
+    title: "Title form",
+  }
+];
+
+```
+a. The final step includes a form for user data (e.g., name, email).
+
+Inputs are marked as required and validated before submission
+
+```
+
+```
+b. Required fields must be filled.
+
+Email format is validated.
+
+Name and text fields are validated for length and allowed characters.
+
+Real-time feedback shows errors next to the inputs.
+```
+
+```
+c. After successful submission, a modal overlay displays a “Data sent successfully” message to confirm that the quiz answers were sent successfully.
+```
+
 # Validate
 
 a. in main.js import this lib:
@@ -73,7 +137,7 @@ in validation.js add static function :
  static typeName = (elem) => {
     if (elem.value === "") {
       ... custom checks
-    } else if (!(/^(([^А-Яа-я<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(elem.value))) {
+    } else if (!(/^[а-яА-ЯёЁa-zA-Z\s'\-]{2,40}$/.test(elem.value))) {
       ... custom checks
     }
     ... custom checks
@@ -87,25 +151,20 @@ e. if you need change notice text
 in validation.js in tips change your text
 ```
  const tips = {
-   required: "Обязательное поле",
-   requiredFile: "Прикрепите резюме",
-   requiredPhone: "Введите номер телефона",
-   requiredName: "Введите имя",
-   requiredMail: "Введите почту",
-   requiredText: "Введите текст",
-   lengthMinName: "Минимум 2 символа",
-   lengthMinPassword: "Не менее 4 символов",
-   lengthMaxName: "",
-   lengthMinMessage: "",
-   lengthMaxMessage: "",
-   validEmail: "Введите правильный формат почты",
-   validPhone: "Введите правильный номер телефона",
-   onlyNumbers: "Только цифры",
-   validName: "Только буквы",
-   formatFile: "Неверный формат файла",
-   sizeFile: "Размер файла должен быть до 2 МБ",
-   success: "",
-   conform: "Поля пароля не совпадают",
+  required: "Required field",
+  requiredPhone: "Enter phone number",
+  requiredName: "Enter name",
+  requiredMail: "Enter email",
+  requiredText: "Enter text",
+  lengthMinName: "Min 2 characters",
+  lengthMinPassword: "Min 4 characters",
+  validEmail: "Enter the correct mail format",
+  onlyNumbers: "Only numbers",
+  validName: "Letters only",
+  formatFile: "Invalid file format",
+  success: "",
+  lengthMinMessage: "10 characters minimum",
+  choiseDate: "Choise a date"
  };
 ```
 

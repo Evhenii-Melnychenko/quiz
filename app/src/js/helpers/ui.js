@@ -22,15 +22,19 @@ export function renderQuestion() {
   nextWrap?.classList.toggle("is-hidden", isLast);
 
   if (q.type === "form") {
-    answersEl.innerHTML = `
-      <div class="form-block">
-        <input class="form-input" id="userName" placeholder="Имя">
-        <input class="form-input" id="userPhone" placeholder="Телефон">
-        <input class="form-input" id="userEmail" placeholder="Email">
-        <button class="submit-btn" id="submitBtn">Отправить</button>
-      </div>
-    `;
+    const form = document.getElementById("quizForm");
+    answersEl.innerHTML = "";
+    
+    if (form) {
+      form.hidden = false;
+    }
   } else {
+    const form = document.getElementById("quizForm");
+    
+    if (form) {
+      form.hidden = true;
+    }
+
     q.answers.forEach((answer, index) => {
       const wrapper = document.createElement("div");
       wrapper.className = "answer";
@@ -53,6 +57,7 @@ export function renderQuestion() {
 
   const current = state.current + 1;
   const total = questions.length;
+
   progressText.textContent = `${current}/${total}`;
   progressFill.style.width = `${(current / total) * 100}%`;
 }

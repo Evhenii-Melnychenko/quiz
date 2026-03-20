@@ -55,7 +55,6 @@ export const questions = [
       "Answer 4"
     ]
   },
-
   {
     type: "form",
     title: "Title form",

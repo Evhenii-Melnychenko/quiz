@@ -3,63 +3,47 @@ import Validation from './validation.js';
 
 export default class ValidForm {
   constructor(formsSelector = '._valid-form', inputsSelector = '._valid-input') {
-    let forms = document.querySelectorAll(formsSelector);
-    let inputs = document.querySelectorAll(inputsSelector);
+    this.forms = document.querySelectorAll(formsSelector);
+    this.inputs = document.querySelectorAll(inputsSelector);
 
-    this.forms = forms.length ? forms : null;
-    this.inputs = inputs.length ? inputs : null;
-    this.success = this.forms ? this.inputs ? 2 : 1 : null;
+    this.hasForms = this.forms.length > 0;
+    this.hasInputs = this.inputs.length > 0;
   }
 
-  init = () => {
-    if (this.success) {
-      this.listeners();
-    }
-  };
+  init() {
+    if (!this.hasForms) return;
 
-  listeners = () => {
-    if (this.success === 2) {
-      setListeners('focus', this.inputs, function () {
-        this.removeEventListener('blur', callbackInputs);
-        this.addEventListener('blur', callbackInputs);
-        this.removeEventListener('input', callbackInputs);
-        this.addEventListener('input', callbackInputs);
+    this.addListeners();
+  }
+
+  addListeners() {
+    if (this.hasInputs) {
+      this.inputs.forEach(input => {
+        input.addEventListener('blur', () => Validation.check(input));
+        input.addEventListener('input', () => Validation.check(input));
       });
     }
 
-    if (this.success !== 0) {
-      for (let i = 0; i < this.forms.length; i++) {
-        this.forms[i].setAttribute('novalidate', '');
-      }
+    this.forms.forEach(form => {
+      form.setAttribute('novalidate', '');
 
-      setListeners('submit', this.forms, callbackForms);
-    }
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
 
-    function callbackInputs(e) {
-      e.preventDefault();
+        let error = false;
 
-      Validation.check(this);
-    }
+        Array.from(form.elements).forEach(el => {
+          if (el.classList?.contains('_valid-input')) {
+            if (Validation.check(el)) {
+              error = true;
+            }
+          }
+        });
 
-    function callbackForms(e) {
-      e.preventDefault();
-
-      let elements = this.elements;
-      let error = false;
-
-      for (let i = 0; i < elements.length; i++) {
-        if (Validation.check(elements[i])) {
-          error = Validation.check(elements[i]);
+        if (!error) {
+          SendData.send(form);
         }
-      }
-
-      !error ? SendData.send(this) : null;
-    }
-  };
-}
-
-function setListeners(eventString, htmlElements, eventCallback) {
-  for (let i = 0; i < htmlElements.length; i++) {
-    htmlElements[i].addEventListener(eventString, eventCallback);
+      });
+    });
   }
 }
