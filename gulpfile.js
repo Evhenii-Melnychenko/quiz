@@ -17,7 +17,6 @@ const newer = require('gulp-newer');
 const plumber = require('gulp-plumber');
 const cached = require('gulp-cached');
 const remember = require('gulp-remember');
-const sharpResponsive = require('gulp-sharp-responsive');
 const webpackStream = require('webpack-stream');
 
 const webpackConfig = require('./webpack.config');
@@ -79,15 +78,7 @@ function images() {
 
   return src(path.images.src)
     .pipe(plumber())
-    .pipe(newer(output))    
-    .pipe(
-      sharpResponsive({
-        formats: [
-          { format: 'jpeg', quality: 82 },
-          { format: 'png', compressionLevel: 9 }
-        ]
-      })
-    )
+    .pipe(newer(output))
     .pipe(dest(output))
     .pipe(webp())
     .pipe(dest(output));

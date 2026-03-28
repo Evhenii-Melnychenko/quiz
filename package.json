@@ -43,7 +43,6 @@
     "gulp-postcss": "^8.0.0",
     "gulp-remember": "^1.0.1",
     "gulp-sass": "^5.1.0",
-    "gulp-sharp-responsive": "^0.4.1",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-webp": "^4.0.1",
     "lint-staged": "^8.1.6",
