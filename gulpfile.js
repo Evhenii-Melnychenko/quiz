@@ -83,7 +83,7 @@ function images() {
     .pipe(
       sharpResponsive({
         formats: [
-          { format: 'jpeg', quality: 82, rename: { extname: '.jpg' } },
+          { format: 'jpeg', quality: 82 },
           { format: 'png', compressionLevel: 9 }
         ]
       })

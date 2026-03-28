@@ -3,7 +3,7 @@ const syntax = 'scss';
 const directories = {
   src: './app/src/',
   dev: './app/dev/',
-  public: `../${lpName}/`,
+  public: './dist/',
   css: 'styles/',
   js: 'js/',
   fonts: 'fonts/',

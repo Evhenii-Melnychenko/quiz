@@ -1,4 +1,3 @@
-const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
@@ -33,12 +32,6 @@ const webpackConfig = (devMode, directories) => {
 
     optimization: {
       minimize: !devMode,
-      minimizer: [
-        new TerserPlugin({
-          parallel: true,
-          extractComments: false,
-        }),
-      ],
     },
 
     plugins: [
