@@ -10,14 +10,14 @@
     pointer-events: all;
 
    .thanks__message {
-        text-align: center;
+      text-align: center;
 
-        &.success {
-            color: $color-success;
-        }
-        &.error {
-            color: $color-error;
-        }
+      &.success {
+        color: $color-success;
+      }
+      &.error {
+        color: $color-error;
+      }
     }
   }
 }

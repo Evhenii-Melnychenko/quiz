@@ -1,214 +1,151 @@
-# Gulp config
+# Quiz Landing
 
-Super duper config
+A landing page with an interactive quiz built in plain JavaScript.
 
+The project includes:
+- a start screen with a button to launch the quiz;
+- step-by-step questions with a progress bar;
+- a final step with a form;
+- field validation and form submission via fetch.
 
+## Technologies
 
-### Installing
+- JavaScript (ES6 modules)
+- SCSS
+- Gulp 4
+- Webpack 4 + Babel
+- BrowserSync
 
-Clone this repo.
+## Project Structure
 
-Install packages
+Main directories:
+- `app/src` - source files
+- `app/dev` - development build
+- `../quiz` - production build (path is configured in `pathes.js`)
 
+Key files:
+- `app/src/index.html` - landing and quiz markup
+- `app/src/js/main.js` - entry point
+- `app/src/js/helpers/questions.js` - questions array
+- `app/src/js/helpers/ui.js` - quiz step renderer
+- `app/src/js/helpers/quiz.js` - navigation logic (Next/Back/Close)
+- `app/src/js/helpers/events.js` - click/keyboard handlers
+- `app/src/js/helpers/validation/*` - validation and form submission
+- `gulpfile.js` - build pipeline
+- `webpack.config.js` - JS bundling
+
+## Installation
+
+```bash
+npm install
 ```
-npm i
-```
 
+## Run
 
-## Getting Started
+Development mode (watch + local server):
 
-```
+```bash
 npm run dev
 ```
 
-## Build
+Production build:
 
-```
+```bash
 npm run build
 ```
 
-## Built With
+## npm Scripts
 
-* [Webpack](https://webpack.js.org/) - bundler for scripts
-* [Gulp](https://gulpjs.com/) - Automate and enhance your workflow
+- `npm run dev` - Gulp dev build + BrowserSync + watch
+- `npm run build` - production build
+- `npm run lint:css` - stylelint for SCSS
+- `npm run lint:js` - eslint for JS
 
+## How The Quiz Works
 
-##
+1. The `.course__button` opens the `.quiz` section.
+2. On first open, the first step is rendered.
+3. The Next button and Enter key move to the next step.
+4. The Back button moves to the previous step.
+5. On the first step, Back closes the quiz.
+6. On the last step, the Next button is hidden and the form is shown.
+7. Esc closes the quiz.
 
-# Quiz Page
+Quiz state is stored in `state.js`:
+- `current` - current step index;
+- `answers` - selected answers.
 
-This page features an interactive **quiz** where users can answer a series of questions. The quiz is fully **configurable**, allowing you to **edit questions and answer options** directly in the code or via the provided data structure.  
+## Configuring Questions
 
----
+All questions are defined in `app/src/js/helpers/questions.js`.
 
-## ✨ Features
-
-### 1️Customizable Questions & Answers
-- Add, remove, or modify questions.
-- Each question can have a type, such as **multiple choice** or **text input**.
-- Answers can be customized for each question.
-
-Example structure:
+Basic format:
 
 ```js
-const questions = [
+export const questions = [
   {
-    title: "Title 1",
-    answers: [
-      "Answer 1",
-      "Answer 2",
-      "Answer 3",
-      "Answer 4",
-    ]
+    title: "Question 1",
+    answers: ["Option 1", "Option 2", "Option 3"]
   },
   {
-    title: "Title 2",
-    answers: [
-      "Answer 1", 
-      "Answer 2", 
-      "Answer 3", 
-      "Answer 4",
-      "Answer 5"]
-  },
-   {
     type: "form",
-    title: "Title form",
+    title: "Final step"
   }
 ];
-
-```
-a. The final step includes a form for user data (e.g., name, email).
-
-Inputs are marked as required and validated before submission
-
 ```
 
-```
-b. Required fields must be filled.
+Important:
+- the step with `type: "form"` must be last, otherwise form display logic will break;
+- regular questions must include the `answers` field.
 
-Email format is validated.
+## Form Validation
 
-Name and text fields are validated for length and allowed characters.
+Initialization is done in `main.js` using the `ValidForm` class.
 
-Real-time feedback shows errors next to the inputs.
-```
+HTML requirements:
+- the form must have the `._valid-form` class;
+- fields must have the `._valid-input` class;
+- each field must have a wrapper element (in this project it is `.form__input-wrapper`) where `error/success` classes and the `data-error` attribute are applied.
 
-```
-c. After successful submission, a modal overlay displays a “Data sent successfully” message to confirm that the quiz answers were sent successfully.
-```
+Validation checks are implemented in `app/src/js/helpers/validation/validation.js`:
+- `name`
+- `text`
+- `email`
+- `password`
+- `date`
 
-# Validate
+You can add a custom type via `data-type` if you create a static method with the same name in the `Validation` class.
 
-a. in main.js import this lib:
-```
-import FormValid from './helpers/validation';
-```
+## Form Submission
 
-b. create an instance of the class and call its method init:
-```
-const formValid = new FormValid();
-formValid.init()
-```
-c. in html: <br> 
-  - in form add class _valid-form
-  - input must have a wrapper
-  - in input add class _valid-input and attr required
-  - validation runs on attr type
-```
-<form class="_valid-form">
-  <div class="form-group">
-    <input type="text" class="_valid-input" required>
-  </div>
-</form>
-```
-in styles ./customize/index.scss add file form.scss ad change style in this file
-:
-```
-@import "form";
-```
+After successful validation, `SendData.send(form)` is called:
+- data is sent as `FormData`;
+- method: `POST`;
+- URL: `form.action` or `/send` if action is not set;
+- success message: `Data sent successfully`;
+- error message: `There was an error sending the data`.
 
-d. if you need custom type, in input add data-type="typeName" <br>
-in html:
-```
-<input data-type="typeName" class="_valid-input" required>
-```
-in validation.js add static function :
-```
- static typeName = (elem) => {
-    if (elem.value === "") {
-      ... custom checks
-    } else if (!(/^[а-яА-ЯёЁa-zA-Z\s'\-]{2,40}$/.test(elem.value))) {
-      ... custom checks
-    }
-    ... custom checks
-    
-    this.tipMessage(elem, tips.success, false);
-    return false;
-  };
-```
+The UI message is shown in the `.thanks` block.
 
-e. if you need change notice text
-in validation.js in tips change your text
-```
- const tips = {
-  required: "Required field",
-  requiredPhone: "Enter phone number",
-  requiredName: "Enter name",
-  requiredMail: "Enter email",
-  requiredText: "Enter text",
-  lengthMinName: "Min 2 characters",
-  lengthMinPassword: "Min 4 characters",
-  validEmail: "Enter the correct mail format",
-  onlyNumbers: "Only numbers",
-  validName: "Letters only",
-  formatFile: "Invalid file format",
-  success: "",
-  lengthMinMessage: "10 characters minimum",
-  choiseDate: "Choise a date"
- };
-```
+## Extra: Timer Module
 
+The project includes an additional module in `app/src/js/helpers/timer/index.js`.
 
-# Timer
+It is not connected by default in `main.js`, but can be used separately:
 
-### Get starterd
-
-a. in main.js import this lib
-```
+```js
 import Timer from './helpers/timer';
-```
 
-b. create an instance of the class and call its method init <br>
-default date is 3 days in advance
-```
 const timer = new Timer();
-
-// for defoult
-timer.init()
-
-/ for custom
-timer.init(new Date('2019-12-17T03:25:00').getTime())
+timer.init(); // default is +4 days
 ```
 
-c. in html you definitely need id="timer"; you add only classes yuo need
+Or pass your own end date:
 
-```
-<div id="timer">
-  <div class="timer__days">
-     <div class="number"></div>
-  </div>
-  <div class="timer__hours">
-     <div class="number"></div>
-  </div>
-  <div class="timer__minutes">
-     <div class="number"></div>
-  </div>
-  <div class="timer__seconds">
-     <div class="number"></div>
-  </div>
-</div>
+```js
+timer.init(new Date('2026-12-31T23:59:59').getTime());
 ```
 
 ## Author
 
-* **Melnychenko Evhenii** - (https://www.linkedin.com/in/evhenii-melnychenko/)
+Melnychenko Evhenii
