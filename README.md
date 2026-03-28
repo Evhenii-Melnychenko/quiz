@@ -8,6 +8,10 @@ The project includes:
 - a final step with a form;
 - field validation and form submission via fetch.
 
+## Live Demo
+
+[Open Live Demo](https://landing-quiz-bqum3ei4z-evhenii-melnychenkos-projects.vercel.app/)
+
 ## Technologies
 
 - JavaScript (ES6 modules)
