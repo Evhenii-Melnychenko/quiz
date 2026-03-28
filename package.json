@@ -54,7 +54,6 @@
     "stylelint-config-standard": "^18.3.0",
     "stylelint-prettier": "^1.0.7",
     "stylelint-scss": "^3.6.1",
-    "terser-webpack-plugin": "^5.3.16",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "webp-in-css": "^0.3.0",
     "webpack": "^4.31.0",
