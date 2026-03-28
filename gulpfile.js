@@ -79,7 +79,7 @@ function images() {
 
   return src(path.images.src)
     .pipe(plumber())
-    .pipe(newer(output))
+    .pipe(newer(output))    
     .pipe(
       sharpResponsive({
         formats: [
